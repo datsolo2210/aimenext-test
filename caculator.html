@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Test3</title>
+    <style>
+        button {
+            width: 50px;
+            height: 50px;
+            font-weight: 500;
+        }
+
+        .x2 {
+            width: 104px;
+        }
+
+        .x3 {
+            width: 158px;
+        }
+
+        .row {
+            margin-top: 5px;
+        }
+
+        #input_view {
+            width: 196px;
+            height: 40px;
+            font-size: 18px;
+            text-align: right;
+            border: 2px solid #999999;
+            border-radius: 6px;
+            padding: 6px;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <input id="input_view" disabled />
+        <div>
+            <div class="row">
+                <button class='x2' onclick="onClear()">CLEAR</button>
+                <button onclick="onDel()">DEL</button>
+                <button onclick="onPress('x')">x</button>
+            </div>
+            <div class="row">
+                <button onclick="onPress(1)">1</button>
+                <button onclick="onPress(2)">2</button>
+                <button onclick="onPress(3)">3</button>
+                <button onclick="onPress(':')">:</button>
+            </div>
+            <div class="row">
+                <button onclick="onPress(4)">4</button>
+                <button onclick="onPress(5)">5</button>
+                <button onclick="onPress(6)">6</button>
+                <button onclick="onPress('+')">+</button>
+            </div>
+            <div class="row">
+                <button onclick="onPress(7)">7</button>
+                <button onclick="onPress(8)">8</button>
+                <button onclick="onPress(9)">9</button>
+                <button onclick="onPress('-')">-</button>
+            </div>
+            <div class="row">
+                <button onclick="onPress(0)">0</button>
+                <button class="x3" onclick="onCalculate()">=</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        function onPress(char) {
+            let exps = document.getElementById('input_view').value;
+            if ((char == exps.charAt(exps.length - 1)) && (char == "+" || char == '-' || char == "x" || char == ":")) return;
+            document.getElementById('input_view').value = exps + char;
+        }
+
+        function onDel() {
+            let exps = document.getElementById('input_view').value;
+            document.getElementById('input_view').value = exps.slice(0, exps.length - 1);
+        }
+
+        function onCalculate() {
+            let exps = document.getElementById('input_view').value;
+            exps = exps.replace('x', '*');
+            exps = exps.replace(':', '/');
+            if (!exps.length) return;
+            let result = eval(exps);
+            if (Number.isFinite(result)) {
+                document.getElementById('input_view').value = result;
+            } else {
+                window.alert('Error! Zero division');
+            }
+        }
+
+        function onClear() {
+            document.getElementById('input_view').value = '';
+        }
+    </script>
+</body>
+
+</html>
